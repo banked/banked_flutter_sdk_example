@@ -1,0 +1,22 @@
+PODS:
+  - Banked (0.0.16):
+    - Sentry
+  - Sentry (7.1.3):
+    - Sentry/Core (= 7.1.3)
+  - Sentry/Core (7.1.3)
+
+DEPENDENCIES:
+  - Banked
+
+SPEC REPOS:
+  trunk:
+    - Banked
+    - Sentry
+
+SPEC CHECKSUMS:
+  Banked: 77a791e1504baee88a30437f06bfd787e27aae74
+  Sentry: 6d963d64804dd06d96e778be729613f481394312
+
+PODFILE CHECKSUM: 67b0d1277e438c3da200a36d5008c864dcf4488b
+
+COCOAPODS: 1.10.1
