@@ -150,8 +150,6 @@ More information on how to integrate Android SDK in an application can be found 
 
 ## iOS Integration
 
-TODO
-
 1. Use [Cocoapods](https://cocoapods.org/) to install the Banked Checkout SDK
 
 To integrate Banked Checkout SDK into your Xcode project using CocoaPods, specify it in your Podfile:
