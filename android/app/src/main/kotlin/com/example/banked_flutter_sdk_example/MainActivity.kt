@@ -17,18 +17,18 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Banked.onPaymentSessionListener = this
-        Banked.apiKey = BANKED_API_KEY
+        Banked.setOnPaymentSessionListener(this)
+        Banked.setApiKey(BANKED_API_KEY)
     }
 
     override fun onDestroy() {
-        Banked.onPaymentSessionListener = null
+        Banked.setOnPaymentSessionListener(null)
         super.onDestroy()
     }
 
     override fun onStart() {
         super.onStart()
-        Banked.onStart(activity = this)
+        Banked.onStart(this)
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -36,8 +36,8 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
 
         if (methodChannel == null) {
             methodChannel = MethodChannel(
-                flutterEngine.dartExecutor.binaryMessenger,
-                CHANNEL
+                    flutterEngine.dartExecutor.binaryMessenger,
+                    CHANNEL
             )
 
             methodChannel?.setMethodCallHandler { call, result ->
@@ -47,9 +47,9 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
                     val continueUrl = arguments["continue url"]?.toString() ?: "XXXXXXXX"
 
                     Banked.startPayment(
-                        activity = this,
-                        paymentId = paymentId,
-                        continueUrl = continueUrl
+                            this,
+                            paymentId,
+                            continueUrl
                     )
                     result.success("SDK Started")
                 } else {
@@ -67,12 +67,16 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
         methodChannel?.invokeMethod("BankedSdkPaymentSuccess", toParameterMap(paymentResult))
     }
 
+    override fun onPaymentAborted() {
+        methodChannel?.invokeMethod("BankedSdkPaymentAborted", mapOf<String, String>())
+    }
+
     private fun toParameterMap(paymentResult: PaymentResult): Map<String, String> {
         return mapOf(
-            "paymentId" to paymentResult.paymentId,
-            "amountFormatted" to paymentResult.amountFormatted,
-            "providerName" to paymentResult.providerName,
-            "payeeName" to paymentResult.payeeName
+                "paymentId" to paymentResult.paymentId,
+                "amountFormatted" to paymentResult.amountFormatted,
+                "providerName" to paymentResult.providerName,
+                "payeeName" to paymentResult.payeeName
         )
     }
 }
