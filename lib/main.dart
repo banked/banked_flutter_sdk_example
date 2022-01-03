@@ -45,8 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (call.method == "BankedSdkPaymentSuccess") {
       newStatus = _buildPaymentStatusText("Payment Success", call);
-    } else if (call.method == "BankedSdkPaymentSuccess") {
+    } else if (call.method == "BankedSdkPaymentFailed") {
       newStatus = _buildPaymentStatusText("Payment Failed", call);
+    } else if (call.method == "BankedSdkPaymentAborted") {
+      newStatus = "Payment Aborted";
     }
 
     setState(() {

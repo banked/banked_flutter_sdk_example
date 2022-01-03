@@ -7,7 +7,7 @@ Here is an example project on how to integrate the existing native Android and i
 1. Add the latest gradle dependency into the Android app module build file
 
 ```
-implementation "com.banked:checkout:2.0.0-rc1"
+implementation "com.banked:checkout:2.0.1-beta12"
 ```
 
 2. Add an intent filter into the application manin activity so that the SDK can receive events from the banking providers
@@ -45,6 +45,8 @@ Future<dynamic> _processSdkCallback(MethodCall call) async {
       newStatus = "Payment Success";
     } else if (call.method == "BankedSdkPaymentSuccess") {
       newStatus = "Payment Failed";
+    } else if (call.method == "BankedSdkPaymentAborted") {
+      newStatus = "Payment Aborted";
     }
 
     setState(() {
@@ -85,18 +87,18 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Banked.onPaymentSessionListener = this
-        Banked.apiKey = BANKED_API_KEY
+        Banked.setOnPaymentSessionListener(this)
+        Banked.setApiKey(BANKED_API_KEY)
     }
 
     override fun onDestroy() {
-        Banked.onPaymentSessionListener = null
+        Banked.setOnPaymentSessionListener(null)
         super.onDestroy()
     }
 
     override fun onStart() {
         super.onStart()
-        Banked.onStart(activity = this)
+        Banked.onStart(this)
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -115,9 +117,9 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
                     val continueUrl = arguments["continue url"]?.toString() ?: "XXXXXXXX"
 
                     Banked.startPayment(
-                        activity = this,
-                        paymentId = paymentId,
-                        continueUrl = continueUrl
+                        this,
+                        paymentId,
+                        continueUrl
                     )
                     result.success("SDK Started")
                 } else {
@@ -133,6 +135,10 @@ class MainActivity : FlutterFragmentActivity(), OnPaymentSessionListener {
 
     override fun onPaymentSuccess(paymentResult: PaymentResult) {
         methodChannel?.invokeMethod("BankedSdkPaymentSuccess", toParameterMap(paymentResult))
+    }
+    
+    override fun onPaymentAborted() {
+        methodChannel?.invokeMethod("BankedSdkPaymentAborted", mapOf<String, String>())
     }
 
     private fun toParameterMap(paymentResult: PaymentResult): Map<String, String> {
