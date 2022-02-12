@@ -156,6 +156,12 @@ More information on how to integrate Android SDK in an application can be found 
 
 ## iOS Integration
 
+0. Install Flutter.
+You can use the official guidelines:
+https://docs.flutter.dev/get-started/install/macos
+Or use Homebrew:
+https://postsrc.com/code-snippets/how-to-install-flutter-on-macos-monterey
+
 1. Use [Cocoapods](https://cocoapods.org/) to install the Banked Checkout SDK
 
 To integrate Banked Checkout SDK into your Xcode project using CocoaPods, specify it in your Podfile:
@@ -236,4 +242,50 @@ private let BANKED_API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     }
 }
 ```
+
+3. Setup the proper API key. Contact Banked for getting this information.
+
+4. To run the app in a real device, setup Signing properly.
+
+5. If you receive the error:
+```
+Error: Could not find included file ‘Generated.xcconfig’ in search paths (in target ‘Runner’)
+```
+Run these commands from the root directory:
+```
+flutter clean
+flutter pub get
+cd ios/
+pod install
+```
+
+Try also to update your cocoapods repository running:
+```
+pod repo update
+```
+
+You can also check this website:
+https://fluttercorner.com/solved-error-could-not-find-included-file-generated-xcconfig-in-search-paths-in-target-runner/
+
+6. Make sure you use the latest Banked version.
+`pod install` will maintain the version defined in Podfile.lock.
+Running `pod update` will download the latest version, given that `Podfile` does not define a specific version.
+
+You can run from time to time:
+```
+pod outdated
+```
+to check which pods are outdated in your project.
+
+7. If you see the error:
+```
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+```
+After creating a new project from scracth and trying to use cocoapods, perhaps you have to follow these steps:
+https://stackoverflow.com/questions/53630136/using-cocoapods-libraries-in-flutter-ios-platform-specific-code
+(Add some modifications in the .xcconfig files)
+
+
+
+
 

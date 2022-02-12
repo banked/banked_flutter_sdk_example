@@ -21,12 +21,12 @@ private let BANKED_API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
             result(FlutterMethodNotImplemented)
             return
         }
-        
+
         guard let arguments = call.arguments as? [String : Any] else {
             result(FlutterError(code: "NO_ARGUMENTS", message: "Can't extract flutter arguments", details: nil))
             return
         }
-        
+
         guard let paymentId = arguments["payment id"] as? String else {
             result(FlutterError(code: "NO_PAYMENT_ID", message: "PaymentId can't be nil", details: nil))
             return
@@ -42,16 +42,16 @@ private let BANKED_API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
-    
+
     private func presentBankedCheckout(result: FlutterResult, paymetId: String, continueURL: String) {
-        
+
         guard let viewController = self.window.rootViewController else {
             result(FlutterError(code: "NO_VIEWCONTROLLER", message: "ViewController can't be nil", details: nil))
             return
         }
-                
+
         BankedCheckout.shared.setUp(BANKED_API_KEY)
-        
+
         BankedCheckout.shared.presentCheckout(viewController, paymentId: paymetId, action: .pay, continueURL: continueURL) { (response) in
             switch response {
             case .success:
