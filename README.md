@@ -1,6 +1,6 @@
 # Banked Flutter SDK Example
 
-Here is an example project on how to integrate the existing native Android and iOS SDKs into a Flutter app.
+Here is an example project on how to integrate the existing native Android and iOS SDKs into a Flutter app. You learn more about Banked SDKs [here](https://developer.banked.com/docs/banked-ios-sdk) and Android SDK [here](https://developer.banked.com/docs/banked-android-sdk).
 
 ## Android Integration
 
@@ -162,7 +162,7 @@ https://docs.flutter.dev/get-started/install/macos
 Or use Homebrew:
 https://postsrc.com/code-snippets/how-to-install-flutter-on-macos-monterey
 
-1. Use [Cocoapods](https://cocoapods.org/) to install the Banked Checkout SDK
+1. Use [Cocoapods](https://cocoapods.org/) to install the Banked Checkout SDK.
 
 To integrate Banked Checkout SDK into your Xcode project using CocoaPods, specify it in your Podfile:
 
@@ -170,9 +170,9 @@ To integrate Banked Checkout SDK into your Xcode project using CocoaPods, specif
 pod ‘Banked’
 ```
 
-2.  Open the file AppDelegate.swift located under Runner > Runner in the Project navigator.
+2.  Open the file `AppDelegate.swift` located under Runner > Runner in the Project navigator.
 
-Add the following code to setup the Banked SDK to initialise, send events to the common dart code and receive events from the dart code and SDK.
+Add the following code to set up the Banked SDK to initialise, send events to the common dart code and receive events from the dart code and SDK.
 
 ```swift
 import UIKit
@@ -243,11 +243,11 @@ private let BANKED_API_KEY = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 }
 ```
 
-3. Setup the proper API key. Contact Banked for getting this information.
+3. Ensure `BANKED_API_KEY` is set to the correct client API key. Contact Banked to get this key.
 
-4. To run the app in a real device, setup Signing properly.
+4. To run the app on a real device, set up Code Signing (Certificates and Mobile provisioning profiles).
 
-5. If you receive the error:
+5. If you receive the following error:
 ```
 Error: Could not find included file ‘Generated.xcconfig’ in search paths (in target ‘Runner’)
 ```
@@ -259,19 +259,18 @@ cd ios/
 pod install
 ```
 
-Try also to update your cocoapods repository running:
+You can also try to update your cocoapods repository by running:
 ```
 pod repo update
 ```
 
-You can also check this website:
-https://fluttercorner.com/solved-error-could-not-find-included-file-generated-xcconfig-in-search-paths-in-target-runner/
+If the error persists, check [this website](https://fluttercorner.com/solved-error-could-not-find-included-file-generated-xcconfig-in-search-paths-in-target-runner/).
 
 6. Make sure you use the latest Banked version.
 `pod install` will maintain the version defined in Podfile.lock.
 Running `pod update` will download the latest version, given that `Podfile` does not define a specific version.
 
-You can run from time to time:
+It is recommended that from time to time you run
 ```
 pod outdated
 ```
@@ -281,9 +280,7 @@ to check which pods are outdated in your project.
 ```
 error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
 ```
-After creating a new project from scracth and trying to use cocoapods, perhaps you have to follow these steps:
-https://stackoverflow.com/questions/53630136/using-cocoapods-libraries-in-flutter-ios-platform-specific-code
-(Add some modifications in the .xcconfig files)
+After creating a new project from scracth and trying to use cocoapods, try following [these steps](https://stackoverflow.com/questions/53630136/using-cocoapods-libraries-in-flutter-ios-platform-specific-code).
 
 
 
