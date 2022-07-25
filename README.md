@@ -6,8 +6,28 @@ Here is an example project on how to integrate the existing native Android and i
 
 1. Add the latest gradle dependency into the Android app module build file
 
+To access the dependency you must first [create Github personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+
+Once that is done you must add the following repository to your root build.gradle file
 ```
-implementation "com.banked:checkout:2.0.1-beta12"
+allprojects {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/banked/banked-android-sdk")
+            credentials {
+                username = <enter your username here>
+                password = <enter your PAT token here>
+            }
+        }
+    }
+}
+```
+
+You can then access the artifact from the following
+
+```
+implementation("com.banked:checkout:2.0.4")
 ```
 
 2. Add an intent filter into the application manin activity so that the SDK can receive events from the banking providers
