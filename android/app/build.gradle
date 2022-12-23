@@ -55,5 +55,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.banked:checkout:2.0.1-beta12'
+    implementation 'com.banked:checkout:2.2.0'
 }
